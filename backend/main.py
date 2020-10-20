@@ -18,20 +18,15 @@ CORS(app, support_credentials=True)
 
 # * ---------- DATABASE CONFIG --------- *
 
-def DATABASE_CONNECTION(): #ignoreline
-    return psycopg2.connect(user='postgres', #ignoreline
-                              password='1234', #ignoreline
-                              host='localhost', #ignoreline
-                              port='5432', #ignoreline
-                              database='cabot') #ignoreline
 
-# descomente
-#def DATABASE_CONNECTION():
-    #return psycopg2.connect(user='user',
-                              #password='password',
-                              #host='host',
-                              #port='port',
-                              #database='db') 
+
+
+def DATABASE_CONNECTION():
+    return psycopg2.connect(user='user',
+                            password='password',
+                            host='localhost',
+                            port='port',
+                            database='db') 
 
 
 
