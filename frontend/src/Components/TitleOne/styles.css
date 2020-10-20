@@ -1,0 +1,9 @@
+.imgTitle{
+ display: flex;
+ justify-content: center;
+ height: 20vh;
+}
+
+.imgTitle img{
+ max-width: 100%;
+}
