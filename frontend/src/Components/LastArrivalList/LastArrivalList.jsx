@@ -64,11 +64,11 @@ const LastArrivalList = () => {
       <h2>Últimos acessos</h2>
       
       <AnswerDiv>
-        {/* Show user's data if user found */}
+        {/* mostrar dados */}
         {employeeList && !employeeList["error"] ? (
           <LastEntriestAnswer answer={employeeList} />
         ) : null}
-        {/* Show an error if user is not found */}
+        {/* mostrar erro */}
         {employeeList["error"] ? <p>Usuário não encontrado...</p> : null}
       </AnswerDiv>
     </LastArrivalSection>

@@ -1,4 +1,4 @@
-# * ---------- IMPORTS --------- *
+#  ---------- IMPORTS --------- 
 from flask import Flask, request, jsonify
 from flask_cors import CORS, cross_origin
 import os
@@ -10,13 +10,13 @@ import re
 
 FILE_PATH = os.path.dirname(os.path.realpath(__file__))
 
-# * ---------- Create App --------- *
+# ---------- Criar app --------- 
 app = Flask(__name__)
 CORS(app, support_credentials=True)
 
 
 
-# * ---------- DATABASE CONFIG --------- *
+#  ---------- Configurar banco de dados --------- 
 
 
 
@@ -30,8 +30,8 @@ def DATABASE_CONNECTION():
 
 
 
-# * --------------------  ROUTES ------------------- *
-# * ---------- Pegando dados do reconhecimento facial ---------- *
+#Routes
+# ---------- Pegando dados do reconhecimento facial ---------- 
 @app.route('/receive_data', methods=['POST'])
 def get_receive_data():
     connection = None
@@ -94,7 +94,7 @@ def get_receive_data():
         return jsonify(json_data)
 
 
-# * ---------- Pegando todos os dados de um funcionário ---------- *
+# ---------- Pegando todos os dados de um funcionário ---------- 
 @app.route('/get_employee/<string:nome>', methods=['GET'])
 def get_employee(nome):
     answer_to_send = {}
@@ -173,7 +173,7 @@ def get_5_last_entries():
     return jsonify(answer_to_send)
 
 
-# * ---------- Adicionando novo funcionário ---------- *
+#  ---------- Adicionando novo funcionário ---------- 
 @app.route('/add_employee', methods=['POST'])
 @cross_origin(supports_credentials=True)
 def add_employee():
@@ -191,7 +191,7 @@ def add_employee():
     return jsonify(answer)
 
 
-# * ---------- Pegando a lista de funcionários ---------- *
+# ---------- Pegando a lista de funcionários ---------- 
 @app.route('/get_employee_list', methods=['GET'])
 def get_employee_list():
     employee_list = {}
@@ -208,7 +208,7 @@ def get_employee_list():
     return jsonify(employee_list)
 
 
-# * ---------- Apagando funcionário ---------- *
+# ---------- Apagando funcionário ---------- 
 @app.route('/delete_employee/<string:name>', methods=['GET'])
 def delete_employee(name):
     try:
@@ -224,7 +224,7 @@ def delete_employee(name):
 
 
                                  
-# * -------------------- RUN SERVER -------------------- *
+#Run server
 if __name__ == '__main__':
     
     app.run(host='127.0.0.1', port=5000, debug=True)

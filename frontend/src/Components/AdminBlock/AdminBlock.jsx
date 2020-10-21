@@ -35,9 +35,8 @@ const AdminBlock = () => {
   return (
     <AdminBlockSection>
       <h2>Administração</h2>
-      {/*Add employee form*/}
       <AddEmployeeForm />
-      {/*List of employee + delete button*/}
+      {/*lista de funcionários + botão delete*/}
       <EmployeeToDeleteList />
     </AdminBlockSection>
   );

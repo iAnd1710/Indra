@@ -31,9 +31,7 @@ class VideoCapture:
 # Selecionando webcam do pc
 video_capture = VideoCapture(0)
 
-# video_capture.set(5,1)
-
-# * -------------------- Usuarios -------------------- *
+# -------------------- Usuarios --------------------
 known_face_encodings = []
 known_face_names = []
 known_faces_filenames = []
@@ -56,16 +54,9 @@ process_this_frame = True
 
 
 while True:
-    # for i in range(5):
-    #     video_capture.grab()
-    # Grab a single frame of video
+    
     frame = video_capture.read()
     
-    # # Redimensionando o frame de vídeo para o tamanho 1/4 para processar mais rápido o reconhecimento de rosto
-    # small_frame = cv2.resize(frame, (0, 0), fx=0.25, fy=0.25)
-    # print(sys.exc_info())
-    # # Converter imagem de BGR para RGB 
-    # frame = small_frame[:, :, ::-1]
     
     # Processando todos os frames uma só vez
     if process_this_frame:
@@ -77,18 +68,14 @@ while True:
         face_names = []
 
 
-        # * ---------- Iniciar JSON to EXPORT --------- *
+        # ---------- Iniciar JSON to EXPORT ---------
         json_to_export = {}
         
         for face_encoding in face_encodings:
-            # See if the face is a match for the known face(s)
+            # Ver se rosto combina com algum rosto conhecido
             matches = face_recognition.compare_faces(known_face_encodings, face_encoding)
             name = "Unknown"
-
-            # # Se uma correspondência foi encontrada em known_face_encodings, apenas use a primeira.
-            # if True in matches:
-            #     first_match_index = matches.index(True)
-            #     name = known_face_names[first_match_index]
+            
 
             # Ou, em vez disso, use o rosto conhecido com a menor distância para o novo rosto
             face_distances = face_recognition.face_distance(known_face_encodings, face_encoding)
@@ -96,13 +83,13 @@ while True:
             if matches[best_match_index]:
                 name = known_face_names[best_match_index]
 
-                # * ---------- Salvando dados para enviar à API -------- *
+                # ---------- Salvando dados para enviar à API -------- 
                 json_to_export['nome'] = name
                 json_to_export['hora'] = f'{time.localtime().tm_hour}:{time.localtime().tm_min}:{time.localtime().tm_sec}'
-                json_to_export['data'] = f'{time.localtime().tm_mday}/{time.localtime().tm_mon}/{time.localtime().tm_year}'
+                json_to_export['data'] = f'{time.localtime().tm_mday}-{time.localtime().tm_mon}-{time.localtime().tm_year}'
                 json_to_export['picture_array'] = frame.tolist()
 
-                # * ---------- Enviando dados para a API --------- *
+                # ---------- Enviando dados para a API ---------
 
 
                 r = requests.post(url='http://127.0.0.1:5000/receive_data', json=json_to_export)
@@ -114,17 +101,10 @@ while True:
             
             # Mostrar os resultados
     for (top, right, bottom, left), name in zip(face_locations, face_names):
-        # Dimensione novamente os locais dos rostos, já que o quadro que detectamos foi dimensionado para 1/4 do tamanho
-        # top *= 4
-        # right *= 4
-        # bottom *= 4
-        # left *= 4
-
-        # Desenhar um quadrado em volta do rosto
+            # Desenhar um quadrado em volta do rosto
         cv2.rectangle(frame, (left, top), (right, bottom), (0, 0, 255), 2)
 
         # Colocar o nome embaixo
-        # cv2.rectangle(frame, (left, bottom - 35), (right, bottom), (0, 0, 255), cv2.FILLED)
         font = cv2.FONT_HERSHEY_DUPLEX
         cv2.putText(frame, name, (left + 6, bottom - 6), font, 1.0, (255, 255, 255), 1)
 
